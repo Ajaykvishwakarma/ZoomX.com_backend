@@ -15,7 +15,7 @@ router.post('/photobook', async (req, res) => {
     }
 })
 
-router.get('/photobook/:id', async(req, res) => {
+router.get('/photobook/:id',async(req, res) => {
     try{
         const photobook = await Photobook.findById(req.params.id).lean().exec()
         return res.status(200).send(photobook)
@@ -28,14 +28,14 @@ router.get('/photobook/:id', async(req, res) => {
 
 router.get('/photobooks', async(req, res) => {
     try{
-        const page = req.query.page || 1;
-        const limit = req.query.limit || 8;
+        const page = req.query.page || 1
+        const limit = req.query.limit || 8
         let totalPages = 0;
         let photobooks
         if(req.query.q) {
             if(req.query.q = 'sort')
             {
-                photobooks = await Photobook.find().skip((page - 1)*limit).limit(limit).lean().exec() 
+                photobooks = await Photobook.find().skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Photobook.find().countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
                 photobooks = req.query.sort == 1 ? photobooks.sort((a,b) => (a.no - b.no)): photobooks.sort((a,b)=>(-a.no + b.no))
@@ -45,7 +45,7 @@ router.get('/photobooks', async(req, res) => {
             {
                 photobooks = await Photobook.find({type: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Photobook.find({type: req.query.base}).countDocuments()
-                totolPages = (Math.ceil(totalDocs/limit))
+                totalPages = (Math.ceil(totalDocs/limit))
             }
             else {
                 photobooks = await Photobook.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
@@ -56,7 +56,7 @@ router.get('/photobooks', async(req, res) => {
         else{
             photobooks = await Photobook.find().skip((page - 1) * limit).limit(limit).lean().exec()
             const totalDocs = await Photobook.find().countDocuments()
-            totolPages = (Math.ceil(totalDocs/limit))
+            totalPages = (Math.ceil(totalDocs/limit))
 
         }
         let arr = []
