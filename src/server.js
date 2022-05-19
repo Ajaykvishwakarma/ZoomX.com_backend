@@ -5,6 +5,7 @@ const mongoConnector = require('./configs/db');
 
 
 const { register, login } = require('./controllers/user.controller');
+const photobookController = require('./controllers/photobook.controller')
 
 
 const app = express();
@@ -15,6 +16,7 @@ const port = process.env.PORT || 5000;
 
 app.use('/signup', register);
 app.use('/signin', login);
+app.use('/', photobookController)
 
 module.exports = () => {
 
