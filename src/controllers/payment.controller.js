@@ -3,13 +3,13 @@ const { auth } = require('../middlewares/auth');
 
 const router = Router()
 
-const Cart = require('../models/payment.model');
+const Payment = require('../models/payment.model');
 
 
 router.post('/payment', async (req, res) => {
     try{
-        const cart = await Cart.create(req.body)
-        return res.status(200).send(cart)
+        const payment = await Payment.create(req.body)
+        return res.status(200).send(payment)
     }
     catch (error) {
         return res.status(500).send({message: error.message})
@@ -18,8 +18,8 @@ router.post('/payment', async (req, res) => {
 
 router.get('/cart/:id', async(req, res) => {
     try{
-        const cart = await Cart.findById(req.params.id).lean().exec()
-        return res.status(200).send(cart)
+        const payment = await Payment.findById(req.params.id).lean().exec()
+        return res.status(200).send(payment)
 
     } catch(error) {
         return res.status(500).send({message : error.message})
@@ -30,9 +30,9 @@ router.get('/cart/:id', async(req, res) => {
 router.get("/payments", async (req, res) => {
   
     try{
-        const cart = await Cart.find().lean().exec();
+        const payment = await Payment.find().lean().exec();
 
-        return res.status(200).send({cart});
+        return res.status(200).send({payment});
     } catch (error){
         return res.status(500).send({message :error.message})
     }
@@ -40,9 +40,9 @@ router.get("/payments", async (req, res) => {
 
 router.delete("/payment/:id", async (req, res) => {
     try {
-      const cart = await Cart.findByIdAndDelete(req.params.id).lean().exec();
+      const payment = await Payment.findByIdAndDelete(req.params.id).lean().exec();
   
-      res.status(200).send(cart);
+      res.status(200).send(payment);
     } catch (error) {
       return res.status(500).send(error.message);
     }

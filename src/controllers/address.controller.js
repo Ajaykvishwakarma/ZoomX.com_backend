@@ -3,13 +3,13 @@ const { auth } = require('../middlewares/auth');
 
 const router = Router()
 
-const Cart = require('../models/address.model');
+const Address = require('../models/address.model');
 
 
 router.post('/address', async (req, res) => {
     try{
-        const cart = await Cart.create(req.body)
-        return res.status(200).send(cart)
+        const address = await Address.create(req.body)
+        return res.status(200).send(address)
     }
     catch (error) {
         return res.status(500).send({message: error.message})
@@ -18,8 +18,8 @@ router.post('/address', async (req, res) => {
 
 router.get('/address/:id', async(req, res) => {
     try{
-        const cart = await Cart.findById(req.params.id).lean().exec()
-        return res.status(200).send(cart)
+        const address = await Address.findById(req.params.id).lean().exec()
+        return res.status(200).send(address)
 
     } catch(error) {
         return res.status(500).send({message : error.message})
@@ -30,9 +30,9 @@ router.get('/address/:id', async(req, res) => {
 router.get("/addresses", async (req, res) => {
   
     try{
-        const cart = await Cart.find().lean().exec();
+        const address = await Address.find().lean().exec();
 
-        return res.status(200).send({cart});
+        return res.status(200).send({address});
     } catch (error){
         return res.status(500).send({message :error.message})
     }
@@ -40,9 +40,9 @@ router.get("/addresses", async (req, res) => {
 
 router.delete("/address/:id", async (req, res) => {
     try {
-      const cart = await Cart.findByIdAndDelete(req.params.id).lean().exec();
+      const address = await Address.findByIdAndDelete(req.params.id).lean().exec();
   
-      res.status(200).send(cart);
+      res.status(200).send(address);
     } catch (error) {
       return res.status(500).send(error.message);
     }
