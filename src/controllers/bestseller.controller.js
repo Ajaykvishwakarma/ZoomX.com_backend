@@ -38,18 +38,18 @@ router.get('/bestsellers', async(req, res) => {
                 bestsellers = await Bestseller.find().skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Bestseller.find().countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
-                bestsellers = req.query.sort == 1 ? bestsellers.sort((a,b) => (a.no - b.no)): bestsellers.sort((a,b)=>(-a.no + b.no))
+                bestsellers = req.query.sort == 1 ? bestsellers.sort((a,b) => (a.discount - b.discount)): bestsellers.sort((a,b)=>(-a.discount + b.discount))
 
             } 
             else if(req.query.q == 'filter')
             {
-                bestsellers = await Bestseller.find({type: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Bestseller.find({type: req.query.base}).countDocuments()
+                bestsellers = await Bestseller.find({name: req.query.name}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Bestseller.find({name: req.query.name}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
             else {
-                bestsellers = await Photobook.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Photobook.find({block: req.query.block}).countDocuments()
+                bestsellers = await Bestseller.find({name : req.query.name}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Bestseller.find({name: req.query.name}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
         }
