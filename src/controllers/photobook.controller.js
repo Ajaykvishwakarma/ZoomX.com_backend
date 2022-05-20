@@ -47,7 +47,12 @@ router.get('/photobooks', async(req, res) => {
                 const totalDocs = await Photobook.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-           
+            else
+                {
+                    photobooks = await Photobook.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
+                    const totalDocs = await Photobook.find({block : req.query.block}).countDocuments()
+                    totolPages = (Math.ceil(totalDocs/limit))
+                }
         }
         else{
             photobooks = await Photobook.find().skip((page - 1) * limit).limit(limit).lean().exec()

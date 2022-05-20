@@ -47,7 +47,12 @@ router.get('/cardstocks', async(req, res) => {
                 const totalDocs = await Cardstock.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-           
+           else
+                {
+                    cardstocks = await Cardstock.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
+                    const totalDocs = await Cardstock.find({block : req.query.block}).countDocuments()
+                    totolPages = (Math.ceil(totalDocs/limit))
+                }
         }
         else{
             cardstocks = await Cardstock.find().skip((page - 1) * limit).limit(limit).lean().exec()

@@ -47,6 +47,12 @@ router.get('/bestsellers', async(req, res) => {
                     const totalDocs = await Bestseller.find({name : req.query.base}).countDocuments()
                     totolPages = (Math.ceil(totalDocs/limit))
                 }
+            else
+                {
+                    bestsellers = await Bestseller.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
+                    const totalDocs = await Bestseller.find({block : req.query.block}).countDocuments()
+                    totolPages = (Math.ceil(totalDocs/limit))
+                }
             
         }
         else{

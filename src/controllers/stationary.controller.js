@@ -47,7 +47,12 @@ router.get('/stationarys', async(req, res) => {
                 const totalDocs = await Stationary.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-           
+            else
+            {
+                stationarys = await Stationary.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Stationary.find({block : req.query.block}).countDocuments()
+                totolPages = (Math.ceil(totalDocs/limit))
+            }
         }
         else{
             stationarys = await Stationary.find().skip((page - 1) * limit).limit(limit).lean().exec()

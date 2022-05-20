@@ -12,6 +12,8 @@ const cardstockController = require('./controllers/cardstock.controller');
 const displayController = require('./controllers/display.controller');
 const stationaryController = require('./controllers/stationary.controller');
 const bestsellerController = require('./controllers/bestseller.controller');
+const paymentController = require('./controllers/payment.controller');
+const addressController = require('./controllers/address.controller') 
 
 const app = express();
 app.use(express.json())
@@ -28,6 +30,8 @@ app.use('/', cardstockController)
 app.use('/', displayController)
 app.use('/', stationaryController)
 app.use('/', bestsellerController)
+app.use('/', paymentController)
+app.use('/', addressController)
 
 module.exports = () => {
 

@@ -47,6 +47,13 @@ router.get('/calenders', async(req, res) => {
                 const totalDocs = await Calender.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
+            else
+                {
+                    calenders = await Calender.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
+                    const totalDocs = await Calender.find({block : req.query.block}).countDocuments()
+                    totolPages = (Math.ceil(totalDocs/limit))
+                }
+            
           
         }
         else{

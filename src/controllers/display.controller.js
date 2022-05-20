@@ -47,7 +47,12 @@ router.get('/displays', async(req, res) => {
                 const totalDocs = await Display.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-           
+            else
+                {
+                    displays = await Display.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
+                    const totalDocs = await Display.find({block : req.query.block}).countDocuments()
+                    totolPages = (Math.ceil(totalDocs/limit))
+                }
         }
         else{
             displays = await Display.find().skip((page - 1) * limit).limit(limit).lean().exec()
