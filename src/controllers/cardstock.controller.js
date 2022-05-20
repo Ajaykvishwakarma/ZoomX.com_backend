@@ -33,25 +33,21 @@ router.get('/cardstocks', async(req, res) => {
         let totalPages = 0;
         let cardstocks
         if(req.query.q) {
-            if(req.query.q = 'sort')
+            if(req.query.q == 'sort')
             {
                 cardstocks = await Cardstock.find().skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Cardstock.find().countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
-                cardstocks = req.query.sort == 1 ? cardstocks.sort((a,b) => (a.no - b.no)): cardstocks.sort((a,b)=>(-a.no + b.no))
+                cardstocks = req.query.sort == 1 ? cardstocks.sort((a,b) => (a.discount - b.discount)): cardstocks.sort((a,b)=>(-a.discount + b.discount))
 
             } 
             else if(req.query.q == 'filter')
             {
-                cardstocks = await Cardstock.find({type: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Cardstock.find({type: req.query.base}).countDocuments()
+                cardstocks = await Cardstock.find({name: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Cardstock.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-            else {
-                cardstocks = await Cardstock.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Cardstock.find({block: req.query.block}).countDocuments()
-                totalPages = (Math.ceil(totalDocs/limit))
-            }
+           
         }
         else{
             cardstocks = await Cardstock.find().skip((page - 1) * limit).limit(limit).lean().exec()

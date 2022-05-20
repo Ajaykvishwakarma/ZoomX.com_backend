@@ -33,25 +33,21 @@ router.get('/photobooks', async(req, res) => {
         let totalPages = 0;
         let photobooks
         if(req.query.q) {
-            if(req.query.q = 'sort')
+            if(req.query.q == 'sort')
             {
                 photobooks = await Photobook.find().skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Photobook.find().countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
-                photobooks = req.query.sort == 1 ? photobooks.sort((a,b) => (a.no - b.no)): photobooks.sort((a,b)=>(-a.no + b.no))
+                photobooks = req.query.sort == 1 ? photobooks.sort((a,b) => (a.discount - b.discount)): photobooks.sort((a,b)=>(-a.discount + b.discount))
 
             } 
             else if(req.query.q == 'filter')
             {
-                photobooks = await Photobook.find({type: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Photobook.find({type: req.query.base}).countDocuments()
+                photobooks = await Photobook.find({name: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Photobook.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-            else {
-                photobooks = await Photobook.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Photobook.find({block: req.query.block}).countDocuments()
-                totalPages = (Math.ceil(totalDocs/limit))
-            }
+           
         }
         else{
             photobooks = await Photobook.find().skip((page - 1) * limit).limit(limit).lean().exec()

@@ -33,25 +33,21 @@ router.get('/displays', async(req, res) => {
         let totalPages = 0;
         let displays
         if(req.query.q) {
-            if(req.query.q = 'sort')
+            if(req.query.q == 'sort')
             {
                 displays = await Display.find().skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Display.find().countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
-                displays = req.query.sort == 1 ? displays.sort((a,b) => (a.no - b.no)): displays.sort((a,b)=>(-a.no + b.no))
+                displays = req.query.sort == 1 ? displays.sort((a,b) => (a.discount - b.discount)): displays.sort((a,b)=>(-a.discount + b.discount))
 
             } 
             else if(req.query.q == 'filter')
             {
-                displays = await Display.find({type: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Display.find({type: req.query.base}).countDocuments()
+                displays = await Display.find({name: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Display.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-            else {
-                displays = await Display.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Display.find({block: req.query.block}).countDocuments()
-                totalPages = (Math.ceil(totalDocs/limit))
-            }
+           
         }
         else{
             displays = await Display.find().skip((page - 1) * limit).limit(limit).lean().exec()

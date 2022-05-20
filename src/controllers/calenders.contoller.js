@@ -33,25 +33,21 @@ router.get('/calenders', async(req, res) => {
         let totalPages = 0;
         let calenders
         if(req.query.q) {
-            if(req.query.q = 'sort')
+            if(req.query.q == 'sort')
             {
                 calenders = await Calender.find().skip((page - 1) * limit).limit(limit).lean().exec()
                 const totalDocs = await Calender.find().countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
-                calenders = req.query.sort == 1 ? calenders.sort((a,b) => (a.no - b.no)): calenders.sort((a,b)=>(-a.no + b.no))
+                calenders = req.query.sort == 1 ? calenders.sort((a,b) => (a.discount- b.discount)): calenders.sort((a,b)=>(-a.discount + b.discount))
 
             } 
             else if(req.query.q == 'filter')
             {
-                calenders = await Calender.find({type: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Calender.find({type: req.query.base}).countDocuments()
+                calenders = await Calender.find({name: req.query.base}).skip((page - 1) * limit).limit(limit).lean().exec()
+                const totalDocs = await Calender.find({name: req.query.base}).countDocuments()
                 totalPages = (Math.ceil(totalDocs/limit))
             }
-            else {
-                calenders = await Calender.find({block : req.query.block}).skip((page - 1) * limit).limit(limit).lean().exec()
-                const totalDocs = await Calender.find({block: req.query.block}).countDocuments()
-                totalPages = (Math.ceil(totalDocs/limit))
-            }
+          
         }
         else{
             calenders = await Calender.find().skip((page - 1) * limit).limit(limit).lean().exec()
