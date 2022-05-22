@@ -6,7 +6,7 @@ const router = Router()
 const Address = require('../models/address.model');
 
 
-router.post('/address',auth, async (req, res) => {
+router.post('/address', async (req, res) => {
     try{
         const address = await Address.create(req.body)
         return res.status(200).send(address)
@@ -16,7 +16,7 @@ router.post('/address',auth, async (req, res) => {
     }
 })
 
-router.get('/address/:id',auth, async(req, res) => {
+router.get('/address/:id', async(req, res) => {
     try{
         const address = await Address.findById(req.params.id).lean().exec()
         return res.status(200).send(address)
@@ -27,7 +27,7 @@ router.get('/address/:id',auth, async(req, res) => {
 
 })
 
-router.get("/addresses",auth, async (req, res) => {
+router.get("/addresses", async (req, res) => {
   
     try{
         const address = await Address.find().lean().exec();
@@ -38,7 +38,7 @@ router.get("/addresses",auth, async (req, res) => {
     }
 });
 
-router.delete("/address/:id",auth, async (req, res) => {
+router.delete("/address/:id", async (req, res) => {
     try {
       const address = await Address.findByIdAndDelete(req.params.id).lean().exec();
   

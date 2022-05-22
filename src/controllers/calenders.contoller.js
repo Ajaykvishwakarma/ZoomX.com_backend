@@ -5,7 +5,7 @@ const Calender = require('../models/calenders.model');
 
 const router = Router()
 
-router.post('/calender',auth, async (req, res) => {
+router.post('/calender', async (req, res) => {
     try{
         const calender = await Calender.create(req.body)
         return res.status(200).send(calender)
@@ -15,7 +15,7 @@ router.post('/calender',auth, async (req, res) => {
     }
 })
 
-router.get('/calender/:id', auth, async(req, res) => {
+router.get('/calender/:id',  async(req, res) => {
     try{
         const calender = await Calender.findById(req.params.id).lean().exec()
         return res.status(200).send(calender)
@@ -26,7 +26,7 @@ router.get('/calender/:id', auth, async(req, res) => {
 
 })
 
-router.get('/calenders', auth, async(req, res) => {
+router.get('/calenders',  async(req, res) => {
     try{
         const page = req.query.page || 1
         const limit = req.query.limit || 8

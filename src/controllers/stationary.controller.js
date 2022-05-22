@@ -5,7 +5,7 @@ const Stationary = require('../models/stationary.model');
 
 const router = Router()
 
-router.post('/stationary', auth, async (req, res) => {
+router.post('/stationary',  async (req, res) => {
     try{
         const stationary = await Stationary.create(req.body)
         return res.status(200).send(stationary)
@@ -15,7 +15,7 @@ router.post('/stationary', auth, async (req, res) => {
     }
 })
 
-router.get('/stationary/:id', auth, async(req, res) => {
+router.get('/stationary/:id',  async(req, res) => {
     try{
         const stationary = await Stationary.findById(req.params.id).lean().exec()
         return res.status(200).send(stationary)
@@ -26,7 +26,7 @@ router.get('/stationary/:id', auth, async(req, res) => {
 
 })
 
-router.get('/stationarys', auth, async(req, res) => {
+router.get('/stationarys',  async(req, res) => {
     try{
         const page = req.query.page || 1
         const limit = req.query.limit || 8

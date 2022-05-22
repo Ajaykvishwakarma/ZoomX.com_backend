@@ -6,7 +6,7 @@ const router = Router()
 const Payment = require('../models/payment.model');
 
 
-router.post('/payment',auth, async (req, res) => {
+router.post('/payment', async (req, res) => {
     try{
         const payment = await Payment.create(req.body)
         return res.status(200).send(payment)
@@ -16,7 +16,7 @@ router.post('/payment',auth, async (req, res) => {
     }
 })
 
-router.get('/cart/:id', auth, async(req, res) => {
+router.get('/cart/:id',  async(req, res) => {
     try{
         const payment = await Payment.findById(req.params.id).lean().exec()
         return res.status(200).send(payment)
@@ -27,7 +27,7 @@ router.get('/cart/:id', auth, async(req, res) => {
 
 })
 
-router.get("/payments", auth, async (req, res) => {
+router.get("/payments",  async (req, res) => {
   
     try{
         const payment = await Payment.find().lean().exec();
@@ -38,7 +38,7 @@ router.get("/payments", auth, async (req, res) => {
     }
 });
 
-router.delete("/payment/:id", auth, async (req, res) => {
+router.delete("/payment/:id",  async (req, res) => {
     try {
       const payment = await Payment.findByIdAndDelete(req.params.id).lean().exec();
   

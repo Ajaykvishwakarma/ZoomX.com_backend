@@ -5,7 +5,7 @@ const Photobook = require('../models/phototbook.model');
 
 const router = Router()
 
-router.post('/photobook', auth, async (req, res) => {
+router.post('/photobook', async (req, res) => {
     try{
         const photobook = await Photobook.create(req.body)
         return res.status(200).send(photobook)
@@ -15,7 +15,7 @@ router.post('/photobook', auth, async (req, res) => {
     }
 })
 
-router.get('/photobook/:id', auth, async(req, res) => {
+router.get('/photobook/:id', async(req, res) => {
     try{
         const photobook = await Photobook.findById(req.params.id).lean().exec()
         return res.status(200).send(photobook)
@@ -26,7 +26,7 @@ router.get('/photobook/:id', auth, async(req, res) => {
 
 })
 
-router.get('/photobooks', auth, async(req, res) => {
+router.get('/photobooks', async(req, res) => {
     try{
         const page = req.query.page || 1
         const limit = req.query.limit || 8

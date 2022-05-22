@@ -6,7 +6,7 @@ const router = Router()
 const Cart = require('../models/cart.model');
 
 
-router.post('/cart', auth,async (req, res) => {
+router.post('/cart', async (req, res) => {
     try{
         const cart = await Cart.create(req.body)
         return res.status(200).send(cart)
@@ -16,7 +16,7 @@ router.post('/cart', auth,async (req, res) => {
     }
 })
 
-router.get('/cart/:id', auth, async(req, res) => {
+router.get('/cart/:id',  async(req, res) => {
     try{
         const cart = await Cart.findById(req.params.id).lean().exec()
         return res.status(200).send(cart)
@@ -27,7 +27,7 @@ router.get('/cart/:id', auth, async(req, res) => {
 
 })
 
-router.get("/carts", auth, async (req, res) => {
+router.get("/carts",  async (req, res) => {
   
     try{
         const cart = await Cart.find().lean().exec();
@@ -38,7 +38,7 @@ router.get("/carts", auth, async (req, res) => {
     }
 });
 
-router.delete("/cart/:id",auth, async (req, res) => {
+router.delete("/cart/:id", async (req, res) => {
     try {
       const cart = await Cart.findByIdAndDelete(req.params.id).lean().exec();
   
