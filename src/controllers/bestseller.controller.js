@@ -5,7 +5,7 @@ const Bestseller = require('../models/bestseller.model');
 
 const router = Router()
 
-router.post('/bestseller', async (req, res) => {
+router.post('/bestseller', auth,async (req, res) => {
     try{
         const bestseller = await Bestseller.create(req.body)
         return res.status(200).send(bestseller)
@@ -15,7 +15,7 @@ router.post('/bestseller', async (req, res) => {
     }
 })
 
-router.get('/bestseller/:id',async(req, res) => {
+router.get('/bestseller/:id', auth, async(req, res) => {
     try{
         const bestseller = await Bestseller.findById(req.params.id).lean().exec()
         return res.status(200).send(bestseller)
@@ -26,7 +26,7 @@ router.get('/bestseller/:id',async(req, res) => {
 
 })
 
-router.get('/bestsellers', async(req, res) => {
+router.get('/bestsellers',auth, async(req, res) => {
     try{
         const page = req.query.page || 1
         const limit = req.query.limit || 8

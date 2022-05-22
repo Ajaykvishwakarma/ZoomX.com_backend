@@ -5,7 +5,7 @@ const Display = require('../models/display.model');
 
 const router = Router()
 
-router.post('/display', async (req, res) => {
+router.post('/display', auth, async (req, res) => {
     try{
         const display = await Display.create(req.body)
         return res.status(200).send(display)
@@ -15,7 +15,7 @@ router.post('/display', async (req, res) => {
     }
 })
 
-router.get('/display/:id',async(req, res) => {
+router.get('/display/:id', auth, async(req, res) => {
     try{
         const display = await Display.findById(req.params.id).lean().exec()
         return res.status(200).send(display)
@@ -26,7 +26,7 @@ router.get('/display/:id',async(req, res) => {
 
 })
 
-router.get('/displays', async(req, res) => {
+router.get('/displays', auth, async(req, res) => {
     try{
         const page = req.query.page || 1
         const limit = req.query.limit || 8

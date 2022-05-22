@@ -5,7 +5,7 @@ const Cardstock = require('../models/cardstock.model');
 
 const router = Router()
 
-router.post('/cardstock', async (req, res) => {
+router.post('/cardstock',auth, async (req, res) => {
     try{
         const cardstock = await Cardstock.create(req.body)
         return res.status(200).send(cardstock)
@@ -15,7 +15,7 @@ router.post('/cardstock', async (req, res) => {
     }
 })
 
-router.get('/cardstock/:id',async(req, res) => {
+router.get('/cardstock/:id', auth, async(req, res) => {
     try{
         const cardstock = await Cardstock.findById(req.params.id).lean().exec()
         return res.status(200).send(cardstock)
@@ -26,7 +26,7 @@ router.get('/cardstock/:id',async(req, res) => {
 
 })
 
-router.get('/cardstocks', async(req, res) => {
+router.get('/cardstocks', auth, async(req, res) => {
     try{
         const page = req.query.page || 1
         const limit = req.query.limit || 8
